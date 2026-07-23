@@ -26,6 +26,38 @@ A scalable Identity and Access Management (IAM) REST API built with Django REST 
 Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
 
 ### 1. Clone the repository
+Clone this project to your local machine and navigate into the project directory.
 ```bash
-git clone [https://github.com/YOUR_USERNAME/iam-microservice-django.git](https://github.com/YOUR_USERNAME/iam-microservice-django.git)
+git clone [https://github.com/](https://github.com/)<YOUR_GITHUB_USERNAME>/iam-microservice-django.git
 cd iam-microservice-django
+```
+
+### 2. Create and activate a virtual environment
+Isolate the project dependencies by creating a virtual environment.
+```bash
+python -m venv venv
+
+# On Windows:
+venv\Scripts\activate
+
+# On macOS/Linux:
+source venv/bin/activate
+```
+
+### 3. Install dependencies
+Install all the required Python packages from the requirements file.
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run database migrations
+Apply the migrations to set up the local development database.
+```bash
+python manage.py migrate
+```
+
+### 5. Start the development server
+Launch the API locally to verify the setup.
+```bash
+python manage.py runserver
+```
