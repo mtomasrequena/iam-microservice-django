@@ -37,9 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Aplicaciones de terceros
+    # Third-party applications
+    # Django REST Framework (DRF) is required to build the RESTful API architecture.
     'rest_framework',
-    # Aplicaciones locales
+    # SimpleJWT provides the JSON Web Token authentication backend for DRF.
+    'rest_framework_simplejwt',
+    
+    # Local applications
+    # Custom application managing user authentication, models, and RBAC.
     'users',
 ]
 
@@ -122,3 +127,17 @@ STATIC_URL = 'static/'
 
 # Custom User Model configuration
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# Django REST Framework (DRF) Global Configuration
+REST_FRAMEWORK = {
+    # Defines the default authentication mechanisms for the entire API.
+    # We enforce JWTAuthentication to expect a Bearer token in the HTTP Authorization header.
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    # Defines the default permission policies for all endpoints.
+    # 'IsAuthenticated' ensures that endpoints are protected and deny access to anonymous users globally.
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
