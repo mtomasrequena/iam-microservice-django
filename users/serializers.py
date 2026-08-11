@@ -42,3 +42,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             last_name=validated_data.get('last_name', '')
         )
         return user
+
+class KycStatusUpdateSerializer(serializers.ModelSerializer):
+    """
+    Serializer specifically designed for updating the KYC verification status.
+    Exposes only the 'is_kyc_verified' field to prevent accidental updates 
+    to other sensitive user data (Mass Assignment Vulnerability).
+    """
+    class Meta:
+        model = User
+        fields = ['is_kyc_verified']
