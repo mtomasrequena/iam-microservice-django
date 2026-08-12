@@ -3,10 +3,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import get_user_model
-from .serializers import UserRegistrationSerializer
 # Import our custom permissions and serializer
-from .permissions import IsAdminRole, IsClientRole, IsKycVerified
-from .serializers import KycStatusUpdateSerializer
+from .permissions import IsAdminRole, IsAuditorRole, IsClientRole, IsKycVerified
+from .serializers import KycStatusUpdateSerializer, KycStatusSerializer, UserRegistrationSerializer
 
 User = get_user_model()
 
@@ -39,6 +38,18 @@ class AdminUpdateKycView(generics.UpdateAPIView):
     
     # We use the default 'pk' in the URL to identify the user to update.
     # e.g., PATCH /api/v1/users/1/kyc/
+
+class AuditorKycStatusView(generics.RetrieveAPIView):
+    """
+    Endpoint for AUDITOR users to retrieve the KYC status of any user.
+    Uses RetrieveAPIView to handle GET requests automatically.
+    """
+    queryset = User.objects.all()
+    serializer_class = KycStatusSerializer
+    permission_classes = [IsAuditorRole]
+    
+    # We use the default 'pk' in the URL to identify the user to retrieve.
+    # e.g., GET /api/v1/users/1/kyc/
 
 class ClientProtectedDashboardView(APIView):
     """

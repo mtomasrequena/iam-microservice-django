@@ -52,3 +52,15 @@ class KycStatusUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['is_kyc_verified']
+
+class KycStatusSerializer(serializers.ModelSerializer):
+    """
+    Read-only serializer for retrieving the KYC status of a user.
+    Exposes the user's ID, email, and verification status for auditing purposes.
+    Strictly prevents any write operations via read_only_fields.
+    """
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'is_kyc_verified']
+        # Defensive programming: ensure these fields cannot be modified via this serializer
+        read_only_fields = ['id', 'email', 'is_kyc_verified']
